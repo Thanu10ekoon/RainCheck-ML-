@@ -1,42 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  font-family: "Poppins", sans-serif;
-  color: white;
-`;
-
-const Card = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  padding: 40px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-`;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  font-weight: 600;
-`;
-
-const DataText = styled.p`
-  font-size: 1.2rem;
-  margin: 5px 0;
-`;
-
-const Result = styled.p`
-  font-size: 1.4rem;
-  margin-top: 20px;
-  font-weight: bold;
-`;
+import "./index.css"; // Import the CSS file
 
 const App = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -55,39 +18,39 @@ const App = () => {
 
   useEffect(() => {
     fetchPrediction();
-    const interval = setInterval(fetchPrediction, 60000); // Update every 60 seconds
+    const interval = setInterval(fetchPrediction, 60000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <Container>
-      <Card>
-        <Title>🌦 Live Rain Prediction</Title>
+    <div className="container">
+      <div className="card">
+        <h1 className="title">🌦 Live Rain Prediction</h1>
 
         {weatherData ? (
           weatherData.error ? (
-            <Result>⚠️ {weatherData.error}</Result>
+            <p className="result">⚠️ {weatherData.error}</p>
           ) : (
             <>
-              <DataText>🌡 Temperature: {weatherData.temperature}°C</DataText>
-              <DataText>💧 Humidity: {weatherData.humidity}%</DataText>
-              <DataText>🌬 Wind Gusts: {weatherData.wind_gusts} km/h</DataText>
-              <DataText>☁ Cloud Cover: {weatherData.cloud_cover}%</DataText>
-              <DataText>⏲ Pressure: {weatherData.pressure} hPa</DataText>
-              <DataText>❄ Dew Point: {weatherData.dew_point}°C</DataText>
+              <p className="data-text">🌡 Temperature: {weatherData.temperature}°C</p>
+              <p className="data-text">💧 Humidity: {weatherData.humidity}%</p>
+              <p className="data-text">🌬 Wind Gusts: {weatherData.wind_gusts} km/h</p>
+              <p className="data-text">☁ Cloud Cover: {weatherData.cloud_cover}%</p>
+              <p className="data-text">⏲ Pressure: {weatherData.pressure} hPa</p>
+              <p className="data-text">❄ Dew Point: {weatherData.dew_point}°C</p>
 
-              <Result>
+              <p className="result">
                 {weatherData.rain_probability > 0.5
                   ? `🌧 High Possibility of Rain (${weatherData.rain_probability})`
                   : `☀ Low Possibility of Rain (${weatherData.rain_probability})`}
-              </Result>
+              </p>
             </>
           )
         ) : (
-          <Result>⏳ Loading...</Result>
+          <p className="result">⏳ Loading...</p>
         )}
-      </Card>
-    </Container>
+      </div>
+    </div>
   );
 };
 
